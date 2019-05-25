@@ -3,7 +3,13 @@
 		{
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "我的登录"
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/reg/reg",
+			"style":{
+				"navigationBarTitleText":"注册"
 			}
 		}
 	],

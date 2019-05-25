@@ -53,34 +53,32 @@ export default {
 				});
 				return;
 			}
-			// if (this.password.length < 12 && this.password.length > 18) {
-			// 这样就不行了……
-			if (this.password.length < 12) {
+			if (this.password.length < 12 || this.password.length > 18) {
 				uni.showToast({
 					icon: 'none',
-					title: '密码最短12字符',
+					title: '密码长度在12-18字符之间',
 					position: 'top',
 					duration: 2000
 				});
 				return;
 			}
-			const data={
-				username:this.username,
-				password:this.password
-			}
-			const validUser=service.getUser().some((res)=>{
-				return data.username===res.username&&data.password===res.password
-			})
-			if(validUser){
+			const data = {
+				username: this.username,
+				password: this.password
+			};
+			const validUser = service.getUser().some(res => {
+				return data.username === res.username && data.password === res.password;
+			});
+			if (validUser) {
 				uni.showToast({
-					icon:'success',
-					title:'登陆成功'
-				})
-			}else{
+					icon: 'success',
+					title: '登陆成功'
+				});
+			} else {
 				uni.showToast({
-					icon:'none',
-					title:'用户名或密码不正确'
-				})
+					icon: 'none',
+					title: '用户名或密码不正确'
+				});
 			}
 		}
 	}

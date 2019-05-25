@@ -3,7 +3,8 @@ const UserKey = 'UserKey'
 function setUser(userinfo) {
 	const data = {
 		username: userinfo.username,
-		password: userinfo.password
+		password: userinfo.password,
+		email: userinfo.email
 	}
 	uni.setStorageSync(UserKey, data)
 }
@@ -13,7 +14,7 @@ function getUser() {
 	if (!res) {
 		return []
 	}
-	return res
+	return res.data
 }
 export default {
 	setUser,
