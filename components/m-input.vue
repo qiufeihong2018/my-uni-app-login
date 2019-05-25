@@ -11,10 +11,10 @@
 			@focus="onFocus"
 			@blur="onBlur"
 		/>
-		<!-- value.length不需要 -->
-		<view v-if="_clearable && !_displayable" class="m-input-icon">
-			<MIcon color="#666666" type="clear" size="20" @click="clear" ></MIcon>
-		</view>
+		<!-- 账号输入框有值时显示清除按钮 -->
+		<view v-if="_clearable && !_displayable && value.length" class="m-input-icon"><MIcon color="#666666" type="clear" size="20" @click="clear"></MIcon></view>
+		<!-- 是否明文眼睛控制 -->
+		<view v-if="_displayable" class="m-input-icon"><MIcon color="showPassword?'#666666':'#cccccc'" type="eye" size="20" @click="display"></MIcon></view>
 	</view>
 </template>
 <script>
@@ -46,7 +46,9 @@ export default {
 	},
 	data() {
 		return {
+			// 密码明文
 			showPassword: false,
+			// 获取焦点
 			isFocus: false
 		};
 	},
@@ -79,6 +81,9 @@ export default {
 		},
 		onInput(e) {
 			this.$emit('input', e.target.value);
+		},
+		display(){
+			this.showPassword=!this.showPassword
 		}
 	}
 };
