@@ -10,7 +10,7 @@
 				<MInput class="m-input" type="password" displayable v-model="password" placeholder="请输入密码" />
 			</view>
 		</view>
-		<view class="btn-row"><button type="primary" class="primary" @tap="bindLogin">登录</button></view>
+		<view class="btn-row"><button type="primary" class="primary" @tap="handleLogin">登录</button></view>
 		<view class="action-row">
 			<navigator url="../reg/reg">注册账号</navigator>
 			<text>|</text>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import * as service from '../../service.js';
+import service from '../../service.js';
 import { mapState, mapMutations } from 'vuex';
 import MInput from '../../components/m-input.vue';
 export default {
@@ -40,10 +40,8 @@ export default {
 		};
 	},
 	computed: mapState(['forcedLogin']),
-	methods: {},
-	onLoad() {},
 	methods: {
-		bindLogin() {
+		checkAccount() {
 			if (this.username.length < 6) {
 				uni.showToast({
 					title: '用户名最短为6个字符',
@@ -62,14 +60,14 @@ export default {
 				});
 				return;
 			}
-			const data = {
-				username: this.username,
-				password: this.password
-			};
-			const validUser = service.getUser().some(res => {
-				return data.username === res.username && data.password === res.password;
+		},
+		async handleLogin() {
+			return await this.checkAccount();
+			// 对获得的数组进行遍历,有匹配的则返回true
+			const isLogin = service.getUser().some(item => {
+				return item.username === this.username && item.password === this.password;
 			});
-			if (validUser) {
+			if (isLogin) {
 				uni.showToast({
 					icon: 'success',
 					title: '登陆成功'
@@ -77,7 +75,7 @@ export default {
 			} else {
 				uni.showToast({
 					icon: 'none',
-					title: '用户名或密码不正确'
+					title: '登陆失败，请重试'
 				});
 			}
 		}
